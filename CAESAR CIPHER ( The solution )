@@ -1,0 +1,49 @@
+def encrypt(message, key):
+    encrypted_message = ""
+    for char in message:
+        if char.isalpha():
+            shift = (ord(char) - ord('A') + key) % 26
+            if char.islower():
+                encrypted_char = chr(ord('a') + shift)
+            else:
+                encrypted_char = chr(ord('A') + shift)
+            encrypted_message += encrypted_char
+        else:
+            encrypted_message += char
+    return encrypted_message
+
+def decrypt(encrypted_message, key):
+    return encrypt(encrypted_message, -key)
+
+def main():
+    print("Welcome to the Caesar Cipher Encryption/Decryption Program!")
+    
+    while True:
+        choice = input("Do you want to (e)ncrypt or (d)ecrypt? ").lower()
+        
+        if choice not in ['e', 'd']:
+            print("Invalid choice. Please enter 'e' for encrypt or 'd' for decrypt.")
+            continue
+        
+        key = int(input("Please enter the key (0 to 25) to use: "))
+        
+        if not 0 <= key <= 25:
+            print("Invalid key. Please enter a number between 0 and 25.")
+            continue
+
+        message = input("Enter the message to {}: ".format("encrypt" if choice == 'e' else 'decrypt'))
+
+        if choice == 'e':
+            result = encrypt(message, key)
+            print(f"Encrypted message: {result}")
+        else:
+            result = decrypt(message, key)
+            print(f"Decrypted message: {result}")
+
+        another_round = input("Do you want to perform another operation? (y/n): ").lower()
+        if another_round != 'y':
+            print("Thank you for using the Caesar Cipher program. Goodbye!")
+            break
+
+if __name__ == "__main__":
+    main()
